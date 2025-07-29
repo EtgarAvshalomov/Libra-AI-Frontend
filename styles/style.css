@@ -1,0 +1,49 @@
+.chat-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.chat-list-container::-webkit-scrollbar-track:hover {
+  cursor: default;
+}
+
+.chat-list-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.chat-list-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  cursor: default;
+}
+
+.font-mixed {
+  font-family: var(--font-inter), var(--font-assistant), sans-serif;
+}
+
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-track:hover {
+  cursor: default;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  cursor: default;
+}

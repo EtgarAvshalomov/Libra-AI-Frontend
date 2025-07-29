@@ -1,0 +1,105 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Loading from "../../../components/Loading";
+
+export default function Login() {
+
+    const router = useRouter();
+
+    const [isVerified, setIsVerified] = useState<boolean | null>(null);
+    const [message, setMessage] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showMessage, setShowMessage] = useState(false);
+
+    const url = process.env.NEXT_PUBLIC_API_URL;
+
+    // Check if user is logged in
+    useEffect(() => {
+        async function verifyUser() {
+            try {
+                const options: RequestInit = {
+                method: "GET",
+                credentials: "include",
+                };
+                const response = await fetch(`${url}/auth/verify`, options);
+                if (response.status === 200) {
+                    setIsVerified(true);
+                    router.push("/");
+                    return;
+                }
+                setIsVerified(false);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        verifyUser();
+    }, [router]);
+    
+    // Login a user
+    async function login() {
+        try {
+
+            const data = JSON.stringify({email, password});
+
+            const options: RequestInit = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
+                body: data
+            }
+
+            const response = await fetch(`${url}/auth/login`, options);
+            if (response.status === 200) {
+                setMessage("Login successful");
+                setShowMessage(true);
+                router.push("/");
+                return;
+            } 
+            const parsedResponse = await response.json();
+            setMessage(parsedResponse.message);
+            setShowMessage(true);
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
+
+    if(isVerified == null) return <Loading />;
+
+    return (
+        <div className="container h-[98vh] flex justify-center items-center">
+            <div className="text-center bg-[#3a3b3e] border-solid border-1 border-[#444444] rounded-[24px] p-[24px] shadow-[0_0_16px_rgba(255,255,255,0.2)]">
+                <h2>Login</h2>
+                <form onSubmit={(e) => {e.preventDefault(); login();}}>
+                    <p className="my-[8px] text-[14px] text-left">E-mail</p>
+                    <input 
+                        className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} 
+                        type="email" id="email" 
+                        placeholder="example@mail.com"
+                        required/>
+                    <br/>
+                    <p className="my-[8px] text-[14px] text-left">Password</p>
+                    <input 
+                        className="mb-[8px] text-[15px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] font-sans text-[#ffffff] placeholder:text-[14px]"
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        type="password" 
+                        placeholder="●●●●●●●●"
+                        required/>
+                    <br/>
+                    {showMessage && <p className="w-[320px] mb-[0px] pb-[0px]">{message}</p>}
+                    <button type="submit" className="mt-[16px] w-[320px] text-[#ffffff] text-[16px] font-[inter] bg-[#ae25e2] mx-auto border-none rounded-[8px] py-[8px] cursor-pointer">Log In</button>
+                </form>
+                <div className="flex justify-center">
+                    <p className="w-fit text-[16px] cursor-pointer" onClick={() => router.push("/register")}>Create Account</p>
+                </div>
+            </div>
+        </div>
+    )
+}
