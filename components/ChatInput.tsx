@@ -20,12 +20,14 @@ export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, setL
     const url = process.env.NEXT_PUBLIC_API_URL;
 
     // Handle prompt input
-    function promptInput(e: any) {
+    function promptInput(e: React.FormEvent<HTMLTextAreaElement>) {
 
-        if(e.target.value.length > 10000) return;
+        const target = e.target as HTMLTextAreaElement;
+
+        if(target.value.length > 10000) return;
 
         // Set prompt
-        setPrompt(e.target.value);
+        setPrompt(target.value);
         
         // Resize textarea
         const chat = chatRef.current;

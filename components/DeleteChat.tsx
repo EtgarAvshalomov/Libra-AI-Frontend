@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { Chat } from "../types/database";
 
 type DeleteChatProps = {
-    chat: any;
+    chat: Chat;
     chatToDelete: (boolean | null)[];
     index: number;
     toggleChatToDelete: (index: number) => void;

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { User } from "../types/database";
 
 type ProfileProps = {
     sidebarExpanded: boolean;
@@ -9,7 +10,7 @@ type ProfileProps = {
 
 export default function Profile({ sidebarExpanded, setProfileMenu, isLoggedIn }: ProfileProps) {
 
-    const [user, setUser] = useState<any>({});
+    const [user, setUser] = useState<User | null>(null);
 
     const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -45,7 +46,7 @@ export default function Profile({ sidebarExpanded, setProfileMenu, isLoggedIn }:
                     <div className="flex justify-center items-center bg-[#ff00ff] w-[32px] min-w-[32px] min-h-[32px] h-[32px] rounded-full">
                         <p className="my-[0px] select-none">{user?.firstName?.charAt(0).toUpperCase()}</p>
                     </div>
-                    <p className="mt-[6px] mb-[0px] ml-[12px] max-h-[32px] overflow-hidden truncate">{`${user?.firstName.charAt(0).toUpperCase() + user?.firstName.slice(1)} ${user?.lastName.charAt(0).toUpperCase() + user?.lastName.slice(1)}`}</p>
+                    <p className="mt-[6px] mb-[0px] ml-[12px] max-h-[32px] overflow-hidden truncate">{`${(user?.firstName.charAt(0).toUpperCase() || '') + user?.firstName.slice(1)} ${(user?.lastName.charAt(0).toUpperCase() || '') + user?.lastName.slice(1)}`}</p>
                 </div>
                 ) : (
                 <div 

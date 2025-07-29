@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { Model } from "../types/database";
 
 type ModelSelectProps = {
     isLoggedIn: boolean;
@@ -52,7 +53,7 @@ export default function ModelSelect({ isLoggedIn, selectedModelValue, setSelecte
     // Update user data in local storage
     function updateUserData(model: string) {
         setSelectedModelValue(model);
-        let userData = JSON.parse(localStorage.getItem("userData") ?? "");
+        const userData = JSON.parse(localStorage.getItem("userData") ?? "");
         userData.model = model; // Update the selected model
         localStorage.setItem("userData", JSON.stringify(userData));
     }
@@ -65,7 +66,7 @@ export default function ModelSelect({ isLoggedIn, selectedModelValue, setSelecte
                 id="model-select" 
                 value={selectedModelValue}
                 onChange={(event) => updateUserData(event.target.value)} name="model">
-                {models.map((model: any) => (
+                {models.map((model: Model) => (
                 <option key={model.id} value={model.value}>{model.name}</option>
                 ))}
             </select>

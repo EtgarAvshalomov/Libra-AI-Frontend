@@ -1,7 +1,9 @@
 "use client";
 
+import { Message } from "../types/database";
+
 type HeaderProps = {
-    messages: any[]
+    messages: Message[]
 }
 
 export default function Header({ messages }: HeaderProps) {

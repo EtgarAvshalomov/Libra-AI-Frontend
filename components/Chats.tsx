@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import DeleteChat from "./DeleteChat";
+import { Chat } from "../types/database";
 
 type ChatsProps = {
     chatIdParam: string
@@ -12,7 +13,7 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
 
     const router = useRouter();
     const inputRef = useRef<HTMLInputElement>(null);
-    const [chats, setChats] = useState<any[]>([]);
+    const [chats, setChats] = useState<Chat[]>([]);
     const [showChats, setShowChats] = useState(false);
     const [editingChat, setEditingChat] = useState<(boolean | null)[]>([]);
     const [chatToDelete, setChatToDelete] = useState<(boolean | null)[]>([]);
@@ -136,7 +137,7 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
                         </div>
                     </div>
                 )}
-                {chats.map((chat: any, index: number) => (
+                {chats.map((chat: Chat, index: number) => (
                     <div className="flex justify-center" key={chat.id}>
                         <div className={`flex items-center justify-between pl-[5%] w-[85%] h-[36px] text-[13px] rounded-[12px] relative cursor-pointer hover:will-change-transform hover:bg-[#313337] ${(editingChat[index] || chatIdParam == chats[index].id) ? "bg-[#313337]" : ""}`} id={chat.id} onClick={(event) => openChat(event.currentTarget.id)}>
                             {editingChat[index] ? (
