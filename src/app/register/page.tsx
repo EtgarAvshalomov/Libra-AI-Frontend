@@ -114,32 +114,32 @@ export default function Register() {
     }
 
     // Validate first name
-    function firstNameValidation(e: any) {
+    function firstNameValidation(e: React.ChangeEvent<HTMLInputElement>) {
         if(e.target.value.length > 50) return;
         setFirstName(e.target.value);
     }
 
     // Validate last name
-    function lastNameValidation(e: any) {
+    function lastNameValidation(e: React.ChangeEvent<HTMLInputElement>) {
         if(e.target.value.length > 50) return;
         setLastName(e.target.value);
     }
 
     // Validate email
-    function emailValidation(e: any) {
+    function emailValidation(e: React.ChangeEvent<HTMLInputElement>) {
         if(e.target.value.length > 320) return;
         setEmail(e.target.value);
     }
 
     // Validate password
-    function passwordValidation(e: any) {
+    function passwordValidation(e: React.ChangeEvent<HTMLInputElement>) {
         const byteLength = new TextEncoder().encode(e.target.value).length;
         if(byteLength > 72) return;
         setPassword(e.target.value);
     }
 
     // Validate confirmed password
-    function confirmedPasswordValidation(e: any) {
+    function confirmedPasswordValidation(e: React.ChangeEvent<HTMLInputElement>) {
         const byteLength = new TextEncoder().encode(e.target.value).length;
         if(byteLength > 72) return;
         setConfirmedPassword(e.target.value);
@@ -156,7 +156,7 @@ export default function Register() {
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]" 
                         value={firstName} 
-                        onChange={(e) => firstNameValidation(e)} 
+                        onChange={firstNameValidation} 
                         type="text"  
                         placeholder="David"
                         required/>
@@ -165,7 +165,7 @@ export default function Register() {
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]" 
                         value={lastName} 
-                        onChange={(e) => lastNameValidation(e)} 
+                        onChange={lastNameValidation} 
                         type="text"  
                         placeholder="Cohen"
                         required/>
@@ -174,7 +174,7 @@ export default function Register() {
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]" 
                         value={email} 
-                        onChange={(e) => emailValidation(e)} 
+                        onChange={emailValidation} 
                         type="email"  
                         placeholder="example@mail.com"
                         required/>
@@ -183,7 +183,7 @@ export default function Register() {
                     <input 
                         className="mb-[8px] text-[15px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] font-sans text-[#ffffff] placeholder:text-[14px]" 
                         value={password} 
-                        onChange={(e) => passwordValidation(e)} 
+                        onChange={passwordValidation} 
                         type="password" 
                         placeholder="●●●●●●●●"
                         required/>
@@ -192,7 +192,7 @@ export default function Register() {
                     <input 
                         className="mb-[8px] text-[15px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] font-sans text-[#ffffff] placeholder:text-[14px]" 
                         value={confirmedPassword} 
-                        onChange={(e) => confirmedPasswordValidation(e)} 
+                        onChange={confirmedPasswordValidation} 
                         type="password" 
                         placeholder="●●●●●●●●"
                         required/>

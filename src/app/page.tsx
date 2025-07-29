@@ -39,7 +39,7 @@ export default function Chat() {
 
   return (
     <>
-      <Sidebar sidebarExpanded={sidebarExpanded} setSidebarExpanded={setSidebarExpanded} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Sidebar chatIdParam={""} sidebarExpanded={sidebarExpanded} setSidebarExpanded={setSidebarExpanded} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Intro sidebarExpanded={sidebarExpanded} />
     </>
   );

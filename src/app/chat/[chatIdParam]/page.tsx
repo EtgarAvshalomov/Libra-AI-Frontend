@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "../../../../components/Loading";
 import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
 import Messages from "../../../../components/Messages";
 import ChatInput from "../../../../components/ChatInput";
 import LoadingMessages from "../../../../components/LoadingMessages";
+import { Message } from "../../../../types/database";
 
 export default function Chat({ params }: { params: Promise<{ chatIdParam: string }> }) {
 
@@ -16,7 +16,7 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   
