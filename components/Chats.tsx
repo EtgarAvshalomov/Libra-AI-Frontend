@@ -128,7 +128,7 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
     };
 
     return (
-        <div className={`chat-list-container flex-grow overflow-auto`}>
+        <div className={`chat-list-container flex-grow ${sidebarExpanded ? 'overflow-auto' : 'overflow-hidden'}`}>
             <div className={`transition-opacity duration-300 ease-in ${sidebarExpanded ? 'opacity-100' : 'opacity-0'} ${showChats ? '' : 'opacity-0 pointer-events-none'}`}>
                 {sidebarExpanded && (
                     <div className="flex justify-center">

@@ -7,22 +7,9 @@ import { Message } from "../types/database";
 
 type MessagesProps = {
     messages: Message[]
-    loadingMessage: boolean
 }
 
-export default function Messages({ messages, loadingMessage }: MessagesProps) {
-
-    const [showLoading, setShowLoading] = useState(false);
-
-    // Handle loading animation
-    useEffect(() => {
-        if (loadingMessage) {
-            setShowLoading(true);
-        } else {
-            const timeout = setTimeout(() => setShowLoading(false), 300); // Matches transition duration
-            return () => clearTimeout(timeout);
-        }
-    }, [loadingMessage]);
+export default function Messages({ messages }: MessagesProps) {
 
     return (
         <div className="w-[748px] m-auto">
@@ -35,9 +22,6 @@ export default function Messages({ messages, loadingMessage }: MessagesProps) {
                     )}
                 </Fragment>
             ))}
-            {showLoading && (
-                <img className={`w-[50px] h-[50px] transition-opacity duration-300 ease-in-out ${loadingMessage ? 'opacity-100' : 'opacity-0'}`} src="/loading.svg" alt="Loading"></img>
-            )}
         </div>
     )
 }
