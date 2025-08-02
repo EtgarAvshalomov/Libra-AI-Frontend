@@ -45,10 +45,8 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
   // Fetch messages
     useEffect(() => {
         async function getMessages() {
-            console.log("fetching messages");
             await fetchMessages();
             setLoading(false);
-            console.log("loading set to false");
         }
         
         getMessages();
@@ -86,11 +84,10 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
         {loading ? <LoadingMessages /> : (
           <>
           <Header messages={messages} />
-          <Messages messages={messages} loadingMessage={loadingMessage} />
-          <ChatInput chatIdParam={chatIdParam} isLoggedIn={isLoggedIn} fetchMessages={fetchMessages} setLoadingMessage={setLoadingMessage} />
+          <Messages messages={messages} />
+          <ChatInput chatIdParam={chatIdParam} isLoggedIn={isLoggedIn} fetchMessages={fetchMessages} messages={messages} setMessages={setMessages} setLoadingMessage={setLoadingMessage} loadingMessage={loadingMessage} />
           </>
         )}
-        
       </div>
     </>
   );

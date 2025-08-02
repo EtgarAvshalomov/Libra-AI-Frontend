@@ -1,23 +1,54 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import ModelSelect from "./ModelSelect";
 import SendButton from "./SendButton";
+import { Message } from "../types/database";
+import StopButton from "./StopButton";
 
 type ChatInputProps = {
     chatIdParam: string;
     isLoggedIn: boolean;
     fetchMessages: () => void
+    messages: Message[];
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>
     setLoadingMessage: React.Dispatch<React.SetStateAction<boolean>>
+    loadingMessage: boolean
 }
 
-export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, setLoadingMessage }: ChatInputProps) {
+export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, messages, setMessages, setLoadingMessage, loadingMessage }: ChatInputProps) {
 
     const chatRef = useRef<HTMLTextAreaElement>(null);
+    const messagesRef = useRef<Message[]>([]);
     const [selectedModelValue, setSelectedModelValue] = useState("");
     const [prompt, setPrompt] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [showLoading, setShowLoading] = useState(false);
+    const [abortController, setAbortController] = useState<AbortController | null>(null);
 
     const url = process.env.NEXT_PUBLIC_API_URL;
+
+    // Refresh newest messages
+    useEffect(() => {
+        messagesRef.current = messages;
+    }, [messages]);
+
+    // Handle loading animation
+    useEffect(() => {
+        if (loadingMessage) {
+            setShowLoading(true);
+        } else {
+            const timeout = setTimeout(() => setShowLoading(false), 300); // Matches transition duration
+            return () => clearTimeout(timeout);
+        }
+    }, [loadingMessage]);
+
+    // Update new message
+    function updateMessage(chunk: string) {
+        const currentMessages = [...messagesRef.current];
+        currentMessages[currentMessages.length - 1].content += chunk;
+        setMessages(currentMessages);
+        messagesRef.current = currentMessages;
+    }
 
     // Handle prompt input
     function promptInput(e: React.FormEvent<HTMLTextAreaElement>) {
@@ -39,56 +70,119 @@ export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, setL
 
     // Send the prompt to the model
     async function sendPrompt() {
+        try {
+            setErrorMessage("");
 
-        setErrorMessage("");
+            // Add user message
+            let options: RequestInit = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    prompt: prompt, 
+                    model: selectedModelValue
+                })
+            }
 
-        // Add user message
-        const options: RequestInit = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                prompt: prompt, 
-                model: selectedModelValue
-            })
-        }
+            let response = await fetch(`${url}/messages/user?chatId=${chatIdParam}`, options)
+            const parsedResponse = await response.json();
+            if(response.status === 201) {
+                console.log(parsedResponse.data);
+                await fetchMessages();
+            }
+            else {
+                console.log(parsedResponse);
+            }
+            
+            // Send prompt to assistant and get his response
+            setPrompt("");
 
-        let response = await fetch(`${url}/messages/user?chatId=${chatIdParam}`, options)
-        let parsedResponse = await response.json();
-        if(response.status === 201) {
-            console.log(parsedResponse.data);
-            fetchMessages();
-        }
-        else {
-            console.log(parsedResponse);
-        }
-        
-        // Send prompt to assistant and get his response
-        setPrompt("");
-        setLoadingMessage(true);
+            options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    model: selectedModelValue
+                })
+            }
 
-        console.log("Sending prompt...");
+            setLoadingMessage(true);
+            console.log("Sending prompt...");
 
-        response = await fetch(`${url}/messages/assistant?chatId=${chatIdParam}`, options)
-        .finally(() => setLoadingMessage(false));
-        
-        console.log("Received response:");
-        parsedResponse = await response.json();
+            // Add new message locally
+            const newMessage: Message = { id: -1, role: "assistant", content: "", createdAt: "", modelId: -1, chatId: "" };
+            setMessages((prev) => [...prev, newMessage]);
 
-        if(response.status === 201) {
-            console.log(parsedResponse.data);
-            const timeout = setTimeout(() => {
-                fetchMessages();
-            }, 300);
-            return () => clearTimeout(timeout);
-        }
-        else {
-            console.log(parsedResponse);
-            setErrorMessage(parsedResponse.error);
+            const controller = new AbortController();
+            setAbortController(controller);
+
+            response = await fetch(`${url}/messages/assistant-stream?chatId=${chatIdParam}`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ model: selectedModelValue }),
+                signal: controller.signal
+            });
+
+            if (!response.ok || !response.body) {
+                setLoadingMessage(false);
+                setErrorMessage("Error establishing connection");
+                return;
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            let buffer = '';
+
+            // Parse chunks display content
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+                buffer = lines.pop() || '';
+                
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const parsed = JSON.parse(line.slice(6));
+                        if (parsed.type === 'content') {
+                            updateMessage(parsed.data);
+                        } else if (parsed.type === 'done') {
+                            setLoadingMessage(false);
+                            return;
+                        }
+                    }
+                }
+            }
+
+        } catch (error: unknown) {
+            if (error instanceof Error && error.name === 'AbortError') {
+                console.log('Stream was aborted');
+                setLoadingMessage(false);
+            } else {
+                console.error('Error in sendPrompt:', error);
+            }
+        } finally {
+            setAbortController(null);
         }
     }
+
+    // Stop the LLMs response
+    function stopStream() {
+        if (abortController) {
+            abortController.abort();
+            setAbortController(null);
+            setLoadingMessage(false);
+        }
+    };
 
     return (
         <div className="rounded-[24px] bg-[#404045] w-[748px] h-fit mx-auto mt-[16px] mb-[64px]">
@@ -111,7 +205,7 @@ export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, setL
             <div className="flex justify-between items-center pb-[10px]">
                 <ModelSelect isLoggedIn={isLoggedIn} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} />
                 <p id="error-message" className="text-[14px] my-[0px]">{errorMessage}</p>
-                <SendButton sendPrompt={sendPrompt}/>
+                {showLoading ? <StopButton stopStream={stopStream} /> : <SendButton sendPrompt={sendPrompt}/>}
             </div>
         </div>
     )
