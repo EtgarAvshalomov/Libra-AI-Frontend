@@ -149,6 +149,11 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
                                 value={chat.name} 
                                 onClick={(event) => event.stopPropagation()}
                                 onChange={(event) => setChatName(index, event.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                    (e.target as HTMLInputElement).blur();
+                                    }
+                                }}
                                 onBlur={async () => {
                                     toggleEditingChat(index);
                                     await updateChatName(index);

@@ -3,52 +3,12 @@ import { useState, useEffect } from "react";
 import { Model } from "../types/database";
 
 type ModelSelectProps = {
-    isLoggedIn: boolean;
+    models: Model[];
     selectedModelValue: string;
     setSelectedModelValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function ModelSelect({ isLoggedIn, selectedModelValue, setSelectedModelValue }: ModelSelectProps) {
-
-    const [models, setModels] = useState([]);
-
-    const url = process.env.NEXT_PUBLIC_API_URL;
-
-    // Fetch models
-    useEffect(() => {
-        async function fetchModels() {
-        try {
-            if (!isLoggedIn) return;
-            const options: RequestInit = {
-                method: "GET",
-                credentials: 'include'
-            }
-            const response = await fetch(`${url}/models`, options);
-            if(response.status !== 200) {
-                const data = await response.json()
-                console.log(data);
-                return;
-            }
-
-            const parsedResponse = await response.json();
-            const data = parsedResponse.data;
-            setModels(data.models);
-
-            // Initialize local storage
-            if(!localStorage.getItem("userData")) {
-                localStorage.setItem("userData", JSON.stringify({model: data.models[0].value}));
-            }
-
-            // Set model by user data
-            const userData = JSON.parse(localStorage.getItem("userData") ?? "");
-            setSelectedModelValue(userData.model);
-        } catch (error) {
-            console.log(error);
-        }
-        }
-
-        fetchModels();
-    }, [isLoggedIn]);
+export default function ModelSelect({ models, selectedModelValue, setSelectedModelValue }: ModelSelectProps) {
 
     // Update user data in local storage
     function updateUserData(model: string) {

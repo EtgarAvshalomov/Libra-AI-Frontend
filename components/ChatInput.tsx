@@ -2,12 +2,14 @@
 import { useState, useEffect, useRef } from "react";
 import ModelSelect from "./ModelSelect";
 import SendButton from "./SendButton";
-import { Message } from "../types/database";
+import { Message, Model } from "../types/database";
 import StopButton from "./StopButton";
 
 type ChatInputProps = {
     chatIdParam: string;
-    isLoggedIn: boolean;
+    models: Model[];
+    selectedModelValue: string
+    setSelectedModelValue: React.Dispatch<React.SetStateAction<string>>
     fetchMessages: () => void
     messages: Message[];
     setMessages: React.Dispatch<React.SetStateAction<Message[]>>
@@ -15,11 +17,10 @@ type ChatInputProps = {
     loadingMessage: boolean
 }
 
-export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, messages, setMessages, setLoadingMessage, loadingMessage }: ChatInputProps) {
+export default function ChatInput({ chatIdParam, models, selectedModelValue, setSelectedModelValue, fetchMessages, messages, setMessages, setLoadingMessage, loadingMessage }: ChatInputProps) {
 
     const chatRef = useRef<HTMLTextAreaElement>(null);
     const messagesRef = useRef<Message[]>([]);
-    const [selectedModelValue, setSelectedModelValue] = useState("");
     const [prompt, setPrompt] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [showLoading, setShowLoading] = useState(false);
@@ -113,8 +114,10 @@ export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, mess
             setLoadingMessage(true);
             console.log("Sending prompt...");
 
+            const selectedModel = models.find((model) => model.value === selectedModelValue);
+
             // Add new message locally
-            const newMessage: Message = { id: -1, role: "assistant", content: "", createdAt: "", modelId: -1, chatId: "" };
+            const newMessage: Message = { id: -1, role: "assistant", content: "", createdAt: "", model_id: selectedModel?.id || -1, chatId: "" };
             setMessages((prev) => [...prev, newMessage]);
 
             const controller = new AbortController();
@@ -203,7 +206,7 @@ export default function ChatInput({ chatIdParam, isLoggedIn, fetchMessages, mess
               }}
             ></textarea>
             <div className="flex justify-between items-center pb-[10px]">
-                <ModelSelect isLoggedIn={isLoggedIn} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} />
+                <ModelSelect models={models} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} />
                 <p id="error-message" className="text-[14px] my-[0px]">{errorMessage}</p>
                 {showLoading ? <StopButton stopStream={stopStream} /> : <SendButton sendPrompt={sendPrompt}/>}
             </div>
