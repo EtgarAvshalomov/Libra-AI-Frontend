@@ -47,3 +47,27 @@ textarea::-webkit-scrollbar-thumb:hover {
   background: #555;
   cursor: default;
 }
+
+a {
+  color: #3b82f5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+code {
+  display: flex;
+  text-wrap: wrap;
+  background-color: #212327;
+  border-radius: 8px;
+  margin-block: 8px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+think {
+  display: block;
+  color: #9a9ba6;
+  font-size: 14px;
+  border-left: 2px solid #9a9ba6;
+  padding-left: 10px;
+}
