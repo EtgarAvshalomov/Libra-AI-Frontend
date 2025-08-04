@@ -22,7 +22,7 @@ export interface Message {
   role: SenderRole
   content: string
   createdAt: string | null
-  modelId: number
+  model_id: number
   chatId: string | null
 }
 
