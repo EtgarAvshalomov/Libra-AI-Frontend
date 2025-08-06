@@ -24,6 +24,7 @@ export interface Message {
   createdAt: string | null
   model_id: number
   chatId: string | null
+  temperature: number | null
 }
 
 export interface Model {

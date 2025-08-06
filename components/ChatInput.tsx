@@ -4,6 +4,8 @@ import ModelSelect from "./ModelSelect";
 import SendButton from "./SendButton";
 import { Message, Model } from "../types/database";
 import StopButton from "./StopButton";
+import { parse } from "path";
+import TemperatureInput from "./TemperatureInput";
 
 type ChatInputProps = {
     chatIdParam: string;
@@ -25,6 +27,8 @@ export default function ChatInput({ chatIdParam, models, selectedModelValue, set
     const [errorMessage, setErrorMessage] = useState("");
     const [showLoading, setShowLoading] = useState(false);
     const [abortController, setAbortController] = useState<AbortController | null>(null);
+    const [temperature, setTemperature] = useState(1);
+    const [temperatureInput, setTemperatureInput] = useState("1");
 
     const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -75,7 +79,7 @@ export default function ChatInput({ chatIdParam, models, selectedModelValue, set
             setErrorMessage("");
 
             // Add user message
-            let options: RequestInit = {
+            const options: RequestInit = {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -100,24 +104,13 @@ export default function ChatInput({ chatIdParam, models, selectedModelValue, set
             // Send prompt to assistant and get his response
             setPrompt("");
 
-            options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    model: selectedModelValue
-                })
-            }
-
             setLoadingMessage(true);
             console.log("Sending prompt...");
 
             const selectedModel = models.find((model) => model.value === selectedModelValue);
 
             // Add new message locally
-            const newMessage: Message = { id: -1, role: "assistant", content: "", createdAt: "", model_id: selectedModel?.id || -1, chatId: "" };
+            const newMessage: Message = { id: -1, role: "assistant", content: "", createdAt: "", model_id: selectedModel?.id || -1, chatId: "", temperature };
             setMessages((prev) => [...prev, newMessage]);
 
             const controller = new AbortController();
@@ -129,7 +122,7 @@ export default function ChatInput({ chatIdParam, models, selectedModelValue, set
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ model: selectedModelValue }),
+                body: JSON.stringify({ model: selectedModelValue, temperature }),
                 signal: controller.signal
             });
 
@@ -206,7 +199,10 @@ export default function ChatInput({ chatIdParam, models, selectedModelValue, set
               }}
             ></textarea>
             <div className="flex justify-between items-center pb-[10px]">
-                <ModelSelect models={models} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} />
+                <div className="flex items-center ml-[8px]">
+                    <ModelSelect models={models} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} />
+                    <TemperatureInput temperature={temperature} setTemperature={setTemperature} temperatureInput={temperatureInput} setTemperatureInput={setTemperatureInput} />
+                </div>
                 <p id="error-message" className="text-[14px] my-[0px]">{errorMessage}</p>
                 {showLoading ? <StopButton stopStream={stopStream} /> : <SendButton sendPrompt={sendPrompt}/>}
             </div>
