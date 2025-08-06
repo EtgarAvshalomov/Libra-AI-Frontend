@@ -48,6 +48,12 @@ textarea::-webkit-scrollbar-thumb:hover {
   cursor: default;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 a {
   color: #3b82f5;
   text-decoration: none;
