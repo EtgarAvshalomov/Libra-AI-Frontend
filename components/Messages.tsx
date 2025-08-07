@@ -12,12 +12,6 @@ type MessagesProps = {
 
 export default function Messages({ messages, models }: MessagesProps) {
 
-    const bottomRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
-
     return (
         <div className="w-[748px] m-auto">
             {messages.map((message: Message, index: number) => (
@@ -29,7 +23,6 @@ export default function Messages({ messages, models }: MessagesProps) {
                     )}
                 </Fragment>
             ))}
-            <div ref={bottomRef} />
         </div>
     )
 }
