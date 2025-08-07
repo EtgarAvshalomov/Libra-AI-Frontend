@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
@@ -12,6 +12,7 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
 
   const router = useRouter();
   const { chatIdParam } = use(params);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState(false);
@@ -54,41 +55,48 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
         getMessages();
     }, [router]);
 
-    // Fetch models
-    useEffect(() => {
-        async function fetchModels() {
-          try {
-              if (!isLoggedIn) return;
-              const options: RequestInit = {
-                  method: "GET",
-                  credentials: 'include'
-              }
-              const response = await fetch(`${url}/models`, options);
-              if(response.status !== 200) {
-                  const data = await response.json()
-                  console.log(data);
-                  return;
-              }
+  // Fetch models
+  useEffect(() => {
+      async function fetchModels() {
+        try {
+            if (!isLoggedIn) return;
+            const options: RequestInit = {
+                method: "GET",
+                credentials: 'include'
+            }
+            const response = await fetch(`${url}/models`, options);
+            if(response.status !== 200) {
+                const data = await response.json()
+                console.log(data);
+                return;
+            }
 
-              const parsedResponse = await response.json();
-              const data = parsedResponse.data;
-              setModels(data.models);
+            const parsedResponse = await response.json();
+            const data = parsedResponse.data;
+            setModels(data.models);
 
-              // Initialize local storage
-              if(!localStorage.getItem("userData")) {
-                  localStorage.setItem("userData", JSON.stringify({model: data.models[0].value}));
-              }
+            // Initialize local storage
+            if(!localStorage.getItem("userData")) {
+                localStorage.setItem("userData", JSON.stringify({model: data.models[0].value}));
+            }
 
-              // Set model by user data
-              const userData = JSON.parse(localStorage.getItem("userData") ?? "");
-              setSelectedModelValue(userData.model);
-          } catch (error) {
-              console.log(error);
-          }
+            // Set model by user data
+            const userData = JSON.parse(localStorage.getItem("userData") ?? "");
+            setSelectedModelValue(userData.model);
+        } catch (error) {
+            console.log(error);
         }
+      }
 
-        fetchModels();
-    }, [isLoggedIn]);
+      fetchModels();
+  }, [isLoggedIn]);
+
+  // Auto scroll down
+  useEffect(() => {
+    setTimeout(() => { // Slight delay to allow full render
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  }, [messages]);
 
   // Fetch messages function
   async function fetchMessages () {
@@ -121,9 +129,10 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
       <div className={`container relative text-center mt-[14.25%] transition-[margin-left] duration-300 ease-in-out ${sidebarExpanded ? 'ml-[288px]' : 'ml-[68px]'}`}>
         {loading ? <LoadingMessages /> : (
           <>
-          <Header messages={messages} />
-          <Messages messages={messages} models={models} />
-          <ChatInput chatIdParam={chatIdParam} models={models} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} fetchMessages={fetchMessages} messages={messages} setMessages={setMessages} setLoadingMessage={setLoadingMessage} loadingMessage={loadingMessage} />
+            <Header messages={messages} />
+            <Messages messages={messages} models={models} />
+            <ChatInput chatIdParam={chatIdParam} bottomRef={bottomRef} models={models} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} fetchMessages={fetchMessages} messages={messages} setMessages={setMessages} setLoadingMessage={setLoadingMessage} loadingMessage={loadingMessage} />
+            <div ref={bottomRef} />
           </>
         )}
       </div>

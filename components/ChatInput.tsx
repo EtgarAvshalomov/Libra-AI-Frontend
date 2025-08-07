@@ -9,6 +9,7 @@ import TemperatureInput from "./TemperatureInput";
 
 type ChatInputProps = {
     chatIdParam: string;
+    bottomRef: React.RefObject<HTMLDivElement | null>;
     models: Model[];
     selectedModelValue: string
     setSelectedModelValue: React.Dispatch<React.SetStateAction<string>>
@@ -19,7 +20,7 @@ type ChatInputProps = {
     loadingMessage: boolean
 }
 
-export default function ChatInput({ chatIdParam, models, selectedModelValue, setSelectedModelValue, fetchMessages, messages, setMessages, setLoadingMessage, loadingMessage }: ChatInputProps) {
+export default function ChatInput({ chatIdParam, bottomRef, models, selectedModelValue, setSelectedModelValue, fetchMessages, messages, setMessages, setLoadingMessage, loadingMessage }: ChatInputProps) {
 
     const chatRef = useRef<HTMLTextAreaElement>(null);
     const messagesRef = useRef<Message[]>([]);
@@ -71,6 +72,8 @@ export default function ChatInput({ chatIdParam, models, selectedModelValue, set
             chat.style.height = "auto";
             chat.style.height = Math.min(chat.scrollHeight, 200) + "px";
         }
+
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
 
     // Send the prompt to the model
