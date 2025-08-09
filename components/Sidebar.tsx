@@ -20,7 +20,7 @@ export default function Sidebar({ chatIdParam, sidebarExpanded, setSidebarExpand
 
     return (
         <>
-            <aside className={`fixed flex flex-col ml-[8px] mt-[8px] bg-[#212327] h-[98.4%] rounded-[12px] transition-[width] duration-300 ease-in-out ${sidebarExpanded ? 'w-[280px] text-center' : 'w-[68px]'}`}>
+            <aside className={`fixed flex z-50 flex-col ml-[8px] mt-[8px] bg-[#212327] h-[98.4%] rounded-[12px] transition-[width] duration-300 ease-in-out ${sidebarExpanded ? 'w-[280px] text-center' : 'w-[68px]'}`}>
                 <SidebarHeader sidebarExpanded={sidebarExpanded} setSidebarExpanded={setSidebarExpanded} />
                 <Chats chatIdParam={chatIdParam} sidebarExpanded={sidebarExpanded} />
                 <Profile sidebarExpanded={sidebarExpanded} setProfileMenu={setProfileMenu} isLoggedIn={isLoggedIn} />

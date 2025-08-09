@@ -42,7 +42,7 @@ export default function DeleteChat({ chat, chatToDelete, index, toggleChatToDele
     return (
         <>
         {chatToDelete[index] && (
-            <div className="flex justify-between items-center absolute top-[0px] left-[0px] w-[230px] h-[36px] bg-[#313337] rounded-[12px] focus:outline-none"
+            <div className="flex justify-between items-center absolute top-[0px] left-[0px] w-[240px] h-[36px] bg-[#313337] rounded-[12px] focus:outline-none"
                 ref={deleteChatRef}
                 tabIndex={-1}
                 onBlur={() => toggleChatToDelete(index)}>
