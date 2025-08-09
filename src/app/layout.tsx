@@ -30,6 +30,10 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${assistant.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, interactive-widget=resizes-content"
+        />
       </head>
       <body className="antialiased">
         {children}
