@@ -8,7 +8,7 @@ type HeaderProps = {
 
 export default function Header({ messages }: HeaderProps) {
     return (
-        <div className={`transition-[opacity] duration-300 ease-in-out ${messages && messages.length > 0 ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`transition-[opacity] duration-300 ease-in-out max-sm:mb-[100px] ${messages && messages.length > 0 ? 'opacity-0' : 'opacity-100'}`}>
             <header className="flex justify-center items-center">
                 <img className="w-[60px] h-[60px] pb-[10px]" src="/favicon.svg" alt="Logo"/>
                 <h1 className="text-[24px] font-bold ml-[8px] mb-[0px]">
