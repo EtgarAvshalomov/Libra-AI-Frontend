@@ -37,25 +37,25 @@ export default function TemperatureInput({temperature, setTemperature, temperatu
 
     return (
         <>
-        <img className="w-[24px] h-[24px] ml-[60px]" src="/temperature.svg" alt="Temperature"></img>
-        <input 
-            id="temp-slider" 
-            className="ml-[4px]" 
-            type="range" 
-            min="0" 
-            max="2" 
-            step="0.01"
-            value={temperature}
-            onChange={(e) => updateTemperature(e.target.value)}/>
-        <input 
-            id="temp-input" 
-            className="bg-[#404045] text-[#ffffff] text-center ml-[6px] w-[25px] px-[10px] border-solid focus:outline-none rounded-[4px]" 
-            type="number" 
-            min="0" 
-            max="2" 
-            step="0.01" 
-            value={temperatureInput}
-            onChange={(e) => updateTemperature(e.target.value)}/>
+            <img className="w-[24px] h-[24px] ml-[60px]" src="/temperature.svg" alt="Temperature" title="Temperature"></img>
+            <input 
+                id="temp-slider" 
+                className="ml-[4px]" 
+                type="range" 
+                min="0" 
+                max="2" 
+                step="0.01"
+                value={temperature}
+                onChange={(e) => updateTemperature(e.target.value)}/>
+            <input 
+                id="temp-input" 
+                className="bg-[#404045] text-[#cfcfcf] text-[12px] text-center ml-[8px] w-[50px] px-[10px] border-1 border-[grey] focus:outline-none rounded-[4px]" 
+                type="number" 
+                min="0" 
+                max="2" 
+                step="0.01" 
+                value={temperatureInput}
+                onChange={(e) => updateTemperature(e.target.value)}/>
         </>
     )
 }

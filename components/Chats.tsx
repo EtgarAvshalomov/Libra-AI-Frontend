@@ -132,14 +132,14 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
             <div className={`transition-opacity duration-300 ease-in ${sidebarExpanded ? 'opacity-100' : 'opacity-0'} ${showChats ? '' : 'opacity-0 pointer-events-none'}`}>
                 {sidebarExpanded && (
                     <div className="flex justify-center">
-                        <div className="flex justify-center pl-[5%] w-[85%] h-[36px] mb-[4px] items-center rounded-[12px] hover:cursor-pointer hover:bg-[#313337]" title="Add new chat" onClick={addChat}>
+                        <div className="flex justify-center pl-[5%] w-[90%] h-[36px] mb-[4px] items-center rounded-[12px] hover:cursor-pointer hover:bg-[#313337]" title="Add new chat" onClick={addChat}>
                             <img className="w-[24px] h-[24px]" src="/new-chat.svg" alt="New chat"/>
                         </div>
                     </div>
                 )}
                 {chats.map((chat: Chat, index: number) => (
                     <div className="flex justify-center" key={chat.id}>
-                        <div className={`flex items-center justify-between pl-[5%] w-[85%] h-[36px] text-[13px] rounded-[12px] relative cursor-pointer hover:will-change-transform hover:bg-[#313337] ${(editingChat[index] || chatIdParam == chats[index].id) ? "bg-[#313337]" : ""}`} id={chat.id} onClick={(event) => openChat(event.currentTarget.id)}>
+                        <div className={`flex items-center justify-between pl-[5%] w-[90%] h-[36px] text-[13px] rounded-[12px] relative cursor-pointer hover:will-change-transform hover:bg-[#313337] ${(editingChat[index] || chatIdParam == chats[index].id) ? "bg-[#313337]" : ""}`} id={chat.id} onClick={(event) => openChat(event.currentTarget.id)}>
                             {editingChat[index] ? (
                                 <input 
                                 className="border-none outline-none bg-[#313337] text-[13px] text-[#ffffff] w-[92%]" 
@@ -163,9 +163,9 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
                             ) : (
                                 <>
                                 <p className="text-[13px] truncate max-w-[160px]">{chat.name}</p>
-                                <div className="flex justify-end w-[0px]">
+                                <div className="flex justify-end">
                                     <img 
-                                    className="w-[20px] h-[20px] p-[4px] rounded-[8px] mr-[8px] bg-[#212327] cursor-pointer hover:bg-[#404045]" 
+                                    className="w-[28px] h-[28px] p-[4px] rounded-[8px] mr-[8px] bg-[#212327] cursor-pointer hover:bg-[#404045]" 
                                     src="/edit-chat.svg"
                                     title="Edit chat name"
                                     alt="Edit chat name"
@@ -175,7 +175,7 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
                                     }}
                                     />
                                     <img 
-                                    className="w-[20px] h-[20px] p-[4px] rounded-[8px] mr-[8px] bg-[#212327] cursor-pointer hover:bg-[#404045]" 
+                                    className="w-[28px] h-[28px] p-[4px] rounded-[8px] mr-[8px] bg-[#212327] cursor-pointer hover:bg-[#404045]" 
                                     src="/trash.svg"
                                     title="Delete chat"
                                     alt="Delete chat"

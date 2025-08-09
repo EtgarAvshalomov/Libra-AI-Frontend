@@ -13,7 +13,7 @@ type MessagesProps = {
 export default function Messages({ messages, models }: MessagesProps) {
 
     return (
-        <div className="w-[748px] m-auto">
+        <div className="lg:w-[748px] max-lg:w-[470px] m-auto max-lg:text-[12px] lg:text-[16px]">
             {messages.map((message: Message, index: number) => (
                 <Fragment key={index}>
                     {message.role === "assistant" ? (

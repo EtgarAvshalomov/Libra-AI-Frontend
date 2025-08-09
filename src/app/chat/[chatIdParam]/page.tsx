@@ -20,6 +20,7 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
   const [messages, setMessages] = useState<Message[]>([]);
   const [models, setModels] = useState([]);
   const [selectedModelValue, setSelectedModelValue] = useState("");
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   
@@ -122,11 +123,20 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
       console.log(error);
     }
   }
+
+  // Check if window size is at least 1024
+  useEffect(() => {
+    const checkScreenSize = () => setIsDesktop(window.innerWidth >= 1024);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
   
   return (
     <>
-      <Sidebar chatIdParam={chatIdParam} sidebarExpanded={sidebarExpanded} setSidebarExpanded={setSidebarExpanded} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <div className={`container relative text-center mt-[14.25%] transition-[margin-left] duration-300 ease-in-out ${sidebarExpanded ? 'ml-[288px]' : 'ml-[68px]'}`}>
+      {(sidebarExpanded || isDesktop) && <Sidebar chatIdParam={chatIdParam} sidebarExpanded={sidebarExpanded} setSidebarExpanded={setSidebarExpanded} isDesktop={isDesktop} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+      {(!sidebarExpanded && !isDesktop) && <img className="w-[24px] h-[24px] mt-[16px] ml-[14px] absolute top-0 left-0" src="/hamburger.svg" alt="Open Sidebar" onClick={() => setSidebarExpanded(true)}></img>}
+      <div className={`container text-center mt-[14.6%] transition-[all] duration-300 ease-in-out lg:ml-[210px] md:ml-[10%] sm:ml-[10%] max-sm:ml-[0px] ${sidebarExpanded && 'xl:ml-[310px]'}`}>
         {loading ? <LoadingMessages /> : (
           <>
             <Header messages={messages} />
