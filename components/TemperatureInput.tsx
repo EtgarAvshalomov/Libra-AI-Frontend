@@ -5,9 +5,10 @@ type TemperatureInputProps = {
     setTemperature: React.Dispatch<React.SetStateAction<number>>;
     temperatureInput: string;
     setTemperatureInput: React.Dispatch<React.SetStateAction<string>>
+    isDesktop: boolean
 }
 
-export default function TemperatureInput({temperature, setTemperature, temperatureInput, setTemperatureInput}: TemperatureInputProps) {
+export default function TemperatureInput({temperature, setTemperature, temperatureInput, setTemperatureInput, isDesktop}: TemperatureInputProps) {
 
     // Update temperature
     function updateTemperature(tempInput: string) {
@@ -37,25 +38,27 @@ export default function TemperatureInput({temperature, setTemperature, temperatu
 
     return (
         <>
-            <img className="w-[24px] h-[24px] ml-[60px]" src="/temperature.svg" alt="Temperature" title="Temperature"></img>
-            <input 
-                id="temp-slider" 
-                className="ml-[4px]" 
-                type="range" 
-                min="0" 
-                max="2" 
-                step="0.01"
-                value={temperature}
-                onChange={(e) => updateTemperature(e.target.value)}/>
-            <input 
-                id="temp-input" 
-                className="bg-[#404045] text-[#cfcfcf] text-[12px] text-center ml-[8px] w-[50px] px-[10px] border-1 border-[grey] focus:outline-none rounded-[4px]" 
-                type="number" 
-                min="0" 
-                max="2" 
-                step="0.01" 
-                value={temperatureInput}
-                onChange={(e) => updateTemperature(e.target.value)}/>
+            <div className={`flex ${!isDesktop && 'mt-[8px]'}`}>
+                <img className={`w-[24px] h-[24px] ${isDesktop ? 'ml-[60px]' : 'ml-[6px]' }`} src="/temperature.svg" alt="Temperature" title="Temperature"></img>
+                <input 
+                    id="temp-slider" 
+                    className="ml-[4px]" 
+                    type="range" 
+                    min="0" 
+                    max="2" 
+                    step="0.01"
+                    value={temperature}
+                    onChange={(e) => updateTemperature(e.target.value)}/>
+                <input 
+                    id="temp-input" 
+                    className="bg-[#404045] text-[#cfcfcf] text-[12px] text-center ml-[8px] w-[50px] px-[10px] border-1 border-[grey] focus:outline-none rounded-[4px]" 
+                    type="number" 
+                    min="0" 
+                    max="2" 
+                    step="0.01" 
+                    value={temperatureInput}
+                    onChange={(e) => updateTemperature(e.target.value)}/>
+            </div>
         </>
     )
 }
