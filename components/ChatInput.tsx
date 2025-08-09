@@ -186,7 +186,7 @@ export default function ChatInput({ chatIdParam, bottomRef, models, selectedMode
     return (
         <div className="rounded-[24px] bg-[#404045] max-sm:w-[470px] sm:w-[470px] lg:w-[728px] h-fit mx-auto mt-[16px] mb-[64px]">
             <textarea 
-              className="border-none resize-none outline-none bg-[#404045] max-lg:text-[12px] lg:text-[16px] text-[white] font-mixed w-[95%] h-[48px] mt-[15px] placeholder-[#999aa5]"
+              className="border-none resize-none outline-none bg-[#404045] max-lg:text-[12px] lg:text-[16px] text-[white] font-mixed w-[95%] lg:h-[48px] mt-[15px] placeholder-[#999aa5] max-sm:ml-[8px]"
               name="chat" 
               id="chat"
               dir="auto"
