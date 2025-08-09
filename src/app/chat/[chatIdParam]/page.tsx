@@ -136,7 +136,7 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
     <>
       {(sidebarExpanded || isDesktop) && <Sidebar chatIdParam={chatIdParam} sidebarExpanded={sidebarExpanded} setSidebarExpanded={setSidebarExpanded} isDesktop={isDesktop} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
       {(!sidebarExpanded && !isDesktop) && <img className="w-[24px] h-[24px] fixed top-5 left-5" src="/hamburger.svg" alt="Open Sidebar" onClick={() => setSidebarExpanded(true)}></img>}
-      <div className={`container text-center lg:mt-[14.6%] md:mt-[30%] sm:mt-[35%] max-sm:mt-[70%] transition-[all] duration-300 ease-in-out lg:ml-[210px] md:ml-[10%] sm:ml-[10%] max-sm:ml-[0px] ${sidebarExpanded && 'xl:ml-[310px]'}`}>
+      <div className={`container text-center lg:mt-[14.6%] md:mt-[30%] sm:mt-[35%] max-sm:mt-[60%] transition-[all] duration-300 ease-in-out lg:ml-[210px] md:ml-[10%] sm:ml-[10%] max-sm:ml-[0px] ${sidebarExpanded && 'xl:ml-[310px]'}`}>
         {loading ? <LoadingMessages /> : (
           <>
             <Header messages={messages} />
