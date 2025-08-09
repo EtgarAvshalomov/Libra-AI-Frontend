@@ -9,18 +9,19 @@ import TemperatureInput from "./TemperatureInput";
 
 type ChatInputProps = {
     chatIdParam: string;
+    isDesktop: boolean;
     bottomRef: React.RefObject<HTMLDivElement | null>;
     models: Model[];
-    selectedModelValue: string
-    setSelectedModelValue: React.Dispatch<React.SetStateAction<string>>
-    fetchMessages: () => void
+    selectedModelValue: string;
+    setSelectedModelValue: React.Dispatch<React.SetStateAction<string>>;
+    fetchMessages: () => void;
     messages: Message[];
-    setMessages: React.Dispatch<React.SetStateAction<Message[]>>
-    setLoadingMessage: React.Dispatch<React.SetStateAction<boolean>>
-    loadingMessage: boolean
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+    setLoadingMessage: React.Dispatch<React.SetStateAction<boolean>>;
+    loadingMessage: boolean;
 }
 
-export default function ChatInput({ chatIdParam, bottomRef, models, selectedModelValue, setSelectedModelValue, fetchMessages, messages, setMessages, setLoadingMessage, loadingMessage }: ChatInputProps) {
+export default function ChatInput({ chatIdParam, isDesktop, bottomRef, models, selectedModelValue, setSelectedModelValue, fetchMessages, messages, setMessages, setLoadingMessage, loadingMessage }: ChatInputProps) {
 
     const chatRef = useRef<HTMLTextAreaElement>(null);
     const messagesRef = useRef<Message[]>([]);
@@ -184,9 +185,9 @@ export default function ChatInput({ chatIdParam, bottomRef, models, selectedMode
     };
 
     return (
-        <div className="rounded-[24px] bg-[#404045] max-sm:w-[470px] sm:w-[470px] lg:w-[728px] h-fit mx-auto mt-[16px] mb-[64px]">
+        <div className="rounded-[24px] bg-[#404045] max-sm:w-[340px] sm:w-[470px] lg:w-[728px] h-fit mx-auto mt-[16px] mb-[64px]">
             <textarea 
-              className="border-none resize-none outline-none bg-[#404045] max-lg:text-[12px] lg:text-[16px] text-[white] font-mixed w-[95%] h-[48px] mt-[15px] placeholder-[#999aa5]"
+              className="border-none resize-none outline-none bg-[#404045] max-lg:text-[12px] lg:text-[16px] text-[white] font-mixed w-[95%] h-[48px] mt-[15px] placeholder-[#999aa5] max-sm:ml-[8px]"
               name="chat" 
               id="chat"
               dir="auto"
@@ -202,9 +203,9 @@ export default function ChatInput({ chatIdParam, bottomRef, models, selectedMode
               }}
             ></textarea>
             <div className="flex justify-between items-center pb-[10px]">
-                <div className="flex items-center ml-[8px]">
+                <div className={`${isDesktop ? 'flex items-center' : ''} ml-[8px]`}>
                     <ModelSelect models={models} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} />
-                    <TemperatureInput temperature={temperature} setTemperature={setTemperature} temperatureInput={temperatureInput} setTemperatureInput={setTemperatureInput} />
+                    <TemperatureInput temperature={temperature} setTemperature={setTemperature} temperatureInput={temperatureInput} setTemperatureInput={setTemperatureInput} isDesktop={isDesktop} />
                 </div>
                 <p id="error-message" className="text-[14px] my-[0px]">{errorMessage}</p>
                 {showLoading ? <StopButton stopStream={stopStream} /> : <SendButton sendPrompt={sendPrompt}/>}
