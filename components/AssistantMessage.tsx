@@ -21,13 +21,13 @@ export default function AssistantMessage({ message, models }: AssistantMessagePr
     return (
         <>
             <div
-                className="w-100% px-[0.8rem] my-[16px] pt-[0.6rem] pb-[0rem] rounded-[24px] text-start"
+                className="w-100% px-[0.8rem] pt-[0.6rem] pb-[0rem] rounded-[24px] text-start"
                 dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }}
                 dir='auto'
             />
             <div className='flex'>
                 <img className="w-[15px] h-[15px] ml-[12px]" src="/model.svg" alt="Model"/>
-                <p className='max-lg:text-[11px] lg:text-[13px] mt-[0px] pb-[0.6rem] ml-[6px] text-[#9a9ba6] justify-self-start'>{currentModel?.name}</p>
+                <p className='max-lg:text-[11px] lg:text-[13px] mt-[0px] ml-[6px] text-[#9a9ba6] justify-self-start'>{currentModel?.name}</p>
                 <img className="w-[15px] h-[15px] ml-[10px]" src="/temperature.svg" alt="Temperature" />
                 <p className='max-lg:text-[11px] lg:text-[13px] mt-[0px] ml-[4px] text-[#9a9ba6]'>{message.temperature}</p>
             </div>

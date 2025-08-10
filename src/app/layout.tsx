@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Assistant } from 'next/font/google';
 import "../../styles/globals.css";
 import "../../styles/style.css";
+import "../../styles/base.css";
 
 const inter = Inter({
   variable: '--font-inter',
