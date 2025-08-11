@@ -71,7 +71,7 @@ export default function Login() {
     if(isVerified == null) return <Loading />;
 
     return (
-        <div className="container h-[98vh] flex justify-center items-center">
+        <div className="h-[98vh] mx-auto flex justify-center items-center">
             <div className="text-center bg-[#3a3b3e] border-solid border-1 border-[#444444] rounded-[24px] p-[24px] shadow-[0_0_16px_rgba(255,255,255,0.2)]">
                 <h2 className="text-[#ffffff]">Login</h2>
                 <form onSubmit={(e) => {e.preventDefault(); login();}}>
