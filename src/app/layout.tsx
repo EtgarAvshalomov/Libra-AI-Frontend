@@ -36,7 +36,7 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, interactive-widget=resizes-content"
         />
       </head>
-      <body className="antialiased bg-[#292a2d]">
+      <body className="antialiased">
         {children}
       </body>
     </html>

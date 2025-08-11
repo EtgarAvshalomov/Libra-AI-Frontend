@@ -12,11 +12,11 @@ export default function Intro({ sidebarExpanded, isDesktop }: IntroProps) {
           <div className={`transition-[opacity] duration-300 ease-in-out`}>
               <div className={`${isDesktop ? 'flex justify-center items-center' : 'text-center'} mb-[4px]`}>
                   <img className={`${!isDesktop && 'mb-[20%]'} max-lg:ml-[35%] lg:w-[60px] lg:h-[60px] sm:w-[100px] sm:h-[100px] w-[80px] h-[80px] pb-[10px]`} src="/favicon.svg" alt="Logo"/>
-                  <h1 className="text-[24px] font-bold ml-[8px] mb-[0px] max-sm:text-[20px]">
+                  <h1 className="text-[24px] text-[#ffffff] font-bold ml-[8px] mb-[0px] max-sm:text-[20px]">
                     Welcome to Libra.
                   </h1>
               </div>
-              <p className="max-sm:text-[14px] text-center max-sm:px-[8px]">Start a new chat or select an existing one</p>
+              <p className="max-sm:text-[14px] text-[#ffffff] text-center max-sm:px-[8px]">Start a new chat or select an existing one</p>
           </div>
       </div>
     )
