@@ -21,7 +21,7 @@ export default function AssistantMessage({ message, models }: AssistantMessagePr
     return (
         <>
             <div
-                className="w-100% px-[0.8rem] pt-[0.6rem] pb-[0rem] rounded-[24px] text-start"
+                className="w-100% px-[0.8rem] pt-[0.6rem] pb-[0rem] rounded-[24px] text-start text-[#ffffff]"
                 dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }}
                 dir='auto'
             />

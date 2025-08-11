@@ -162,7 +162,7 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
                                 />
                             ) : (
                                 <>
-                                <p className="text-[13px] truncate max-w-[160px]">{chat.name}</p>
+                                <p className="text-[13px] text-[#ffffff] truncate max-w-[160px]">{chat.name}</p>
                                 <div className="flex justify-end">
                                     <img 
                                     className="w-[28px] h-[28px] p-[4px] rounded-[8px] mr-[8px] bg-[#212327] cursor-pointer hover:bg-[#404045]" 

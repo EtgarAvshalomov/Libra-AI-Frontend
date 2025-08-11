@@ -55,7 +55,7 @@ export default function Popup({ profileMenu, setProfileMenu, setIsLoggedIn }: Po
                 logout();
                 }}>
                 <img className="w-[24px] h-[24px]" src="/logout.svg"></img>
-                <p className="text-[14px] my-[10px] ml-[10px]">Log out</p>
+                <p className="text-[14px] text-[#ffffff] my-[10px] ml-[10px]">Log out</p>
             </div>
         </div>
     )
