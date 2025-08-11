@@ -73,9 +73,9 @@ export default function Login() {
     return (
         <div className="container h-[98vh] flex justify-center items-center">
             <div className="text-center bg-[#3a3b3e] border-solid border-1 border-[#444444] rounded-[24px] p-[24px] shadow-[0_0_16px_rgba(255,255,255,0.2)]">
-                <h2>Login</h2>
+                <h2 className="text-[#ffffff]">Login</h2>
                 <form onSubmit={(e) => {e.preventDefault(); login();}}>
-                    <p className="my-[8px] text-[14px] text-left">E-mail</p>
+                    <p className="my-[8px] text-[14px] text-[#ffffff] text-left">E-mail</p>
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]"
                         value={email}
@@ -84,7 +84,7 @@ export default function Login() {
                         placeholder="example@mail.com"
                         required/>
                     <br/>
-                    <p className="my-[8px] text-[14px] text-left">Password</p>
+                    <p className="my-[8px] text-[14px] text-[#ffffff] text-left">Password</p>
                     <input 
                         className="mb-[8px] text-[15px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] font-sans text-[#ffffff] placeholder:text-[14px]"
                         value={password} 
@@ -93,11 +93,11 @@ export default function Login() {
                         placeholder="●●●●●●●●"
                         required/>
                     <br/>
-                    {showMessage && <p className="w-[320px] mb-[0px] pb-[0px]">{message}</p>}
+                    {showMessage && <p className="w-[320px] text-[#ffffff] mb-[0px] pb-[0px]">{message}</p>}
                     <button type="submit" className="mt-[16px] w-[320px] text-[#ffffff] text-[16px] font-[inter] bg-[#ae25e2] mx-auto border-none rounded-[8px] py-[8px] cursor-pointer">Log In</button>
                 </form>
                 <div className="flex justify-center">
-                    <p className="w-fit text-[16px] cursor-pointer" onClick={() => router.push("/register")}>Create Account</p>
+                    <p className="w-fit text-[16px] text-[#ffffff] cursor-pointer" onClick={() => router.push("/register")}>Create Account</p>
                 </div>
             </div>
         </div>

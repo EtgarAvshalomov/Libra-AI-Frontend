@@ -150,9 +150,9 @@ export default function Register() {
     return (
         <div className="container h-[98vh] flex justify-center items-center">
             <div className="text-center bg-[#3a3b3e] border-solid border-1 border-[#444444] rounded-[24px] p-[24px] shadow-[0_0_16px_rgba(255,255,255,0.2)]">
-                <h2>Create an account</h2>
+                <h2 className="text-[#ffffff]">Create an account</h2>
                 <form className="w-[320px]" onSubmit={(e) => {e.preventDefault(); register();}}>
-                    <p className="my-[8px] text-[14px] text-left">First Name</p>
+                    <p className="my-[8px] text-[14px] text-[#ffffff] text-left">First Name</p>
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]" 
                         value={firstName} 
@@ -161,7 +161,7 @@ export default function Register() {
                         placeholder="David"
                         required/>
                     <br/>
-                    <p className="my-[8px] text-[14px] text-left">Last Name</p>
+                    <p className="my-[8px] text-[14px] text-[#ffffff] text-left">Last Name</p>
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]" 
                         value={lastName} 
@@ -170,7 +170,7 @@ export default function Register() {
                         placeholder="Cohen"
                         required/>
                     <br/>
-                    <p className="my-[8px] text-[14px] text-left">E-mail</p>
+                    <p className="my-[8px] text-[14px] text-[#ffffff] text-left">E-mail</p>
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]" 
                         value={email} 
@@ -179,7 +179,7 @@ export default function Register() {
                         placeholder="example@mail.com"
                         required/>
                     <br/>
-                    <p className="my-[8px] text-[14px] text-left">Password</p>
+                    <p className="my-[8px] text-[14px] text-[#ffffff] text-left">Password</p>
                     <input 
                         className="mb-[8px] text-[15px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] font-sans text-[#ffffff] placeholder:text-[14px]" 
                         value={password} 
@@ -188,7 +188,7 @@ export default function Register() {
                         placeholder="●●●●●●●●"
                         required/>
                     <br/>
-                    <p className="my-[8px] text-[14px] text-left">Confirm Password</p>
+                    <p className="my-[8px] text-[14px] text-[#ffffff] text-left">Confirm Password</p>
                     <input 
                         className="mb-[8px] text-[15px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] font-sans text-[#ffffff] placeholder:text-[14px]" 
                         value={confirmedPassword} 
@@ -197,8 +197,8 @@ export default function Register() {
                         placeholder="●●●●●●●●"
                         required/>
                     <br/>
-                    {showMessage && <p className="w-[320px]">{message}</p>}
-                    <ul className="text-left w-[300px]">
+                    {showMessage && <p className="w-[320px] text-[#ffffff]">{message}</p>}
+                    <ul className="text-left text-[#ffffff] w-[300px]">
                         {lowerError && <li>Password must contain at least 1 lowercase letter</li>}
                         {upperError && <li>Password must contain at least 1 uppercase letter</li>}
                         {numberError && <li>Password must contain at least 1 number</li>}
@@ -208,7 +208,7 @@ export default function Register() {
                     <button type="submit" className="mt-[0px] w-[320px] text-[#ffffff] text-[16px] font-[inter] bg-[#ae25e2] mx-auto border-none rounded-[8px] py-[8px] cursor-pointer">Sign Up</button>
                 </form>
                 <div className="flex justify-center">
-                    <p className="w-fit text-[14px] cursor-pointer" onClick={() => router.push("/login")}>Already have an account?</p>
+                    <p className="w-fit text-[14px] text-[#ffffff] cursor-pointer" onClick={() => router.push("/login")}>Already have an account?</p>
                 </div>
             </div>
         </div>
