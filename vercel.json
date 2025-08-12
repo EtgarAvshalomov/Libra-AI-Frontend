@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://libra-ai-backend.onrender.com/:path*"
+      "destination": "https://libra-ai-backend.onrender.com/api/:path*"
     }
   ]
 }
