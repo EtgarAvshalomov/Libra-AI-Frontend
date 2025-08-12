@@ -50,7 +50,8 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
               method: "GET",
               credentials: 'include'
           }
-          const response = await fetch(`${url}/chats`, options);
+          const fetchChatsURL = process.env.NODE_ENV === 'development' ? `${url}/chats` : '/api/chats';
+          const response = await fetch(fetchChatsURL, options);
           if(response.status !== 200) {
               const data = await response.json()
               console.log(data);
@@ -71,7 +72,8 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
             method: "POST",
             credentials: 'include'
         }
-        const response = await fetch(`${url}/chats`, options);
+        const addChatURL = process.env.NODE_ENV === 'development' ? `${url}/chats` : '/api/chats';
+        const response = await fetch(addChatURL, options);
         if(response.status !== 201) {
             const data = await response.json()
             console.log(data);
@@ -93,7 +95,8 @@ export default function Chats({ chatIdParam, sidebarExpanded }: ChatsProps) {
             body: JSON.stringify({name: chat.name})
         }
 
-        const response = await fetch(`${url}/chats?chatId=${chat.id}`, options);
+        const updateChatURL = process.env.NODE_ENV === 'development' ? `${url}/chats?chatId=${chat.id}` : `/api/chats?chatId=${chat.id}`;
+        const response = await fetch(updateChatURL, options);
         if(response.status !== 200) {
             const data = await response.json()
             console.log(data);

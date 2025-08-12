@@ -94,8 +94,8 @@ export default function ChatInput({ chatIdParam, isDesktop, bottomRef, models, s
                     model: selectedModelValue
                 })
             }
-
-            let response = await fetch(`${url}/messages/user?chatId=${chatIdParam}`, options)
+            const userMessageURL = process.env.NODE_ENV === 'development' ? `${url}/messages/user?chatId=${chatIdParam}` : `/api/messages/user?chatId=${chatIdParam}`;
+            let response = await fetch(userMessageURL, options)
             const parsedResponse = await response.json();
             if(response.status === 201) {
                 console.log(parsedResponse.data);
@@ -120,7 +120,8 @@ export default function ChatInput({ chatIdParam, isDesktop, bottomRef, models, s
             const controller = new AbortController();
             setAbortController(controller);
 
-            response = await fetch(`${url}/messages/assistant-stream?chatId=${chatIdParam}`, {
+            const assistantMessageURL = process.env.NODE_ENV === 'development' ? `${url}/messages/assistant-stream?chatId=${chatIdParam}` : `/api/messages/assistant-stream?chatId=${chatIdParam}`;
+            response = await fetch(assistantMessageURL, {
                 method: "POST",
                 credentials: "include",
                 headers: {

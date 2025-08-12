@@ -23,7 +23,8 @@ export default function Profile({ sidebarExpanded, setProfileMenu, isLoggedIn }:
                     method: "GET",
                     credentials: 'include'
                 }
-                const response = await fetch(`${url}/auth/profile`, options);
+                const profileURL = process.env.NODE_ENV === 'development' ? `${url}/auth/profile` : '/api/auth/profile';
+                const response = await fetch(profileURL, options);
                 if(response.status === 200) {
                     const data = await response.json()
                     setUser(data);

@@ -66,7 +66,8 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
                 method: "GET",
                 credentials: 'include'
             }
-            const response = await fetch(`${url}/models`, options);
+            const fetchModelsURL = process.env.NODE_ENV === 'development' ? `${url}/models` : '/api/models';
+            const response = await fetch(fetchModelsURL, options);
             if(response.status !== 200) {
                 const data = await response.json()
                 console.log(data);
@@ -109,7 +110,8 @@ export default function Chat({ params }: { params: Promise<{ chatIdParam: string
           method: "GET",
           credentials: 'include'
       }
-      const response = await fetch(`${url}/messages?chatId=${chatIdParam}`, options);
+      const fetchMessagesURL = process.env.NODE_ENV === 'development' ? `${url}/messages?chatId=${chatIdParam}` : `/api/messages?chatId=${chatIdParam}`;
+      const response = await fetch(fetchMessagesURL, options);
       const parsedResponse = await response.json();
       if(response.status !== 200) {
           const data = await response.json()

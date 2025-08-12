@@ -29,7 +29,8 @@ export default function Popup({ profileMenu, setProfileMenu, setIsLoggedIn }: Po
             credentials: 'include'
         }
 
-        const response = await fetch(`${url}/auth/logout`, options);
+        const logoutURL = process.env.NODE_ENV === 'development' ? `${url}/auth/logout` : '/api/auth/logout';
+        const response = await fetch(logoutURL, options);
         if(response.status === 200) {
             setIsLoggedIn(false);
             router.push("/login");

@@ -30,7 +30,8 @@ export default function DeleteChat({ chat, chatToDelete, index, toggleChatToDele
             method: "DELETE",
             credentials: 'include'
         }
-        const response = await fetch(`${url}/chats?chatId=${chatId}`, options);
+        const deleteChatURL = process.env.NODE_ENV === 'development' ? `${url}/chats?chatId=${chatId}` : `/api/chats?chatId=${chatId}`;
+        const response = await fetch(deleteChatURL, options);
         if(response.status !== 200) {
             const data = await response.json()
             console.log(data);
