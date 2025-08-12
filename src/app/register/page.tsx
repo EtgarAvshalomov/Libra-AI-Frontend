@@ -97,7 +97,8 @@ export default function Register() {
                 credentials: 'include',
                 body: data
             }
-            const response = await fetch(`${url}/auth/register`, options);
+            const registerURL = process.env.NODE_ENV === 'development' ? `${url}/auth/register` : '/api/auth/register';
+            const response = await fetch(registerURL, options);
             if(response.status === 201) {
                 setMessage("Registered successfully");
                 setShowMessage(true);

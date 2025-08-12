@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "../../../components/Loading";
-import { login } from "../../../utils/login";
 
 export default function Login() {
 
@@ -24,7 +23,8 @@ export default function Login() {
                 method: "GET",
                 credentials: "include",
                 };
-                const response = await fetch(`${url}/auth/verify`, options);
+                const verifyURL = process.env.NODE_ENV === 'development' ? `${url}/auth/verify` : '/api/auth/verify';
+                const response = await fetch(verifyURL, options);
                 if (response.status === 200) {
                     setIsVerified(true);
                     router.push("/");
@@ -39,18 +39,36 @@ export default function Login() {
     }, [router]);
     
     // Login a user
-    async function handleLogin() {
+    async function login() {
         try {
-            const { loginMessage } = await login(email, password);
-            setMessage(loginMessage);
+
+            const data = JSON.stringify({email, password});
+
+            const options: RequestInit = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
+                body: data
+            }
+
+            const loginURL = process.env.NODE_ENV === 'development' ? `${url}/auth/login` : '/api/auth/login';
+            const response = await fetch(loginURL, options);
+            if (response.status === 200) {
+                setMessage("Login successful");
+                setShowMessage(true);
+                router.push("/");
+                return;
+            } 
+            const parsedResponse = await response.json();
+            setMessage(parsedResponse.message);
             setShowMessage(true);
-            if (loginMessage === 'Login successful') router.push('/');
         } catch (error) {
-            console.error(error);
-            setMessage('An error occurred. Please try again.');
-            setShowMessage(true);
+            console.log(error);
         }
-    };
+        
+    }
 
     if(isVerified == null) return <Loading />;
 
@@ -58,7 +76,7 @@ export default function Login() {
         <div className="h-[98vh] mx-auto flex justify-center items-center">
             <div className="text-center bg-[#3a3b3e] border-solid border-1 border-[#444444] rounded-[24px] p-[24px] shadow-[0_0_16px_rgba(255,255,255,0.2)]">
                 <h2 className="text-[#ffffff]">Login</h2>
-                <form onSubmit={(e) => {e.preventDefault(); handleLogin();}}>
+                <form onSubmit={(e) => {e.preventDefault(); login();}}>
                     <p className="my-[8px] text-[14px] text-[#ffffff] text-left">E-mail</p>
                     <input 
                         className="mb-[8px] text-[14px] w-[300px] bg-[#2a2b2e] border-solid border-[1px] outline-none rounded-[8px] p-[8px] text-[#ffffff] placeholder:text-[14px]"

@@ -22,7 +22,8 @@ export default function Chat() {
           method: "GET",
           credentials: "include",
         };
-        const response = await fetch(`${url}/auth/verify`, options);
+        const verifyURL = process.env.NODE_ENV === 'development' ? `${url}/auth/verify` : '/api/auth/verify';
+        const response = await fetch(verifyURL, options);
         if (response.status === 200) {
           setIsLoggedIn(true);
         } else {
