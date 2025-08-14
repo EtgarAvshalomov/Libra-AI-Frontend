@@ -46,10 +46,6 @@ The frontend communicates with a Node.js backend API and handles:
 
 [Live Application](https://libra-ai-frontend.vercel.app)
 
-## 🔗 Related Repositories
-
-- [Backend Repository](https://github.com/EtgarAvshalomov/Libra-AI-Backend) - Node.js server with database integration
-
 ## 💻 Local Development
 
 ```bash
@@ -85,6 +81,10 @@ NEXT_PUBLIC_NODE_ENV=development # Only for development
 ## 🚢 Deployment
 
 The application is deployed on Vercel with automatic deployments from the main branch.
+
+## 🔗 Related Repositories
+
+- [Backend Repository](https://github.com/EtgarAvshalomov/Libra-AI-Backend) - Node.js server with database integration
 
 ---
 
