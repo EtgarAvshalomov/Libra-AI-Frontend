@@ -79,7 +79,7 @@ Create a `.env.local` file with the following variables:
 
 ```env
 NEXT_PUBLIC_API_URL=your_backend_api_url
-NEXT_PUBLIC_NODE_ENV=development # (Only for development)
+NEXT_PUBLIC_NODE_ENV=development # Only for development
 ```
 
 ## 🚢 Deployment
