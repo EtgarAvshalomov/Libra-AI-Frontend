@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Libra AI - Frontend
 
-## Getting Started
+A modern, responsive chat interface for interacting with multiple Large Language Models (LLMs) via OpenRouter, featuring dynamic model switching and real-time streaming capabilities.
 
-First, run the development server:
+## 🚀 Features
+
+- **Multi-Model Support**: Switch between different LLM models mid-conversation while maintaining context
+- **Temperature Control**: Adjust response creativity and randomness with customizable temperature settings
+- **Real-Time Streaming**: Server-Sent Events (SSE) for live message streaming
+- **Conversation Management**: Create, edit, and organize chat sessions
+- **Stop Generation**: Interrupt model responses mid-generation with a stop button
+- **User Authentication**: Secure account creation and login system
+- **Responsive Design**: Fully mobile-friendly interface that works across all devices
+- **Context Persistence**: Conversation history maintained when switching models
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js (React)
+- **Styling**: Tailwind CSS + CSS Modules
+- **Authentication**: Integration with backend auth system
+- **Deployment**: Vercel
+- **API Communication**: RESTful APIs with SSE for streaming
+
+## 📱 User Experience
+
+The application provides an intuitive chat interface where users can:
+
+1. **Sign Up/Login**: Create secure accounts with encrypted password storage
+2. **Start New Chats**: Begin conversations with their preferred LLM model
+3. **Customize Settings**: Adjust temperature for response creativity
+4. **Switch Models**: Change AI models without losing conversation context
+5. **Manage Conversations**: Create chats and edit chat names
+6. **Mobile-Friendly**: Seamless experience across desktop and mobile devices
+
+## 🏗️ Architecture
+
+The frontend communicates with a Node.js backend API and handles:
+
+- User authentication and session management
+- Real-time message streaming via Server-Sent Events
+- Dynamic UI updates for model switching and temperature control
+- Responsive chat interface with conversation history
+- Stop functionality for interrupting AI responses
+
+## 🌐 Live Demo
+
+[Live Application](https://libra-ai-frontend.vercel.app)
+
+## 🔗 Related Repositories
+
+- [Backend Repository](https://github.com/EtgarAvshalomov/Libra-AI-Backend) - Node.js server with database integration
+
+## 💻 Local Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+git clone https://github.com/EtgarAvshalomov/Libra-AI-Frontend.git
+cd Libra-AI-Frontend
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.local
+
+# Add your environment variables
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+NEXT_PUBLIC_NODE_ENV=development
+
+# Run development server
+npx next dev -p 3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📋 Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file with the following variables:
 
-## Learn More
+```env
+NEXT_PUBLIC_API_URL=your_backend_api_url
+NEXT_PUBLIC_NODE_ENV=development # (Only for development)
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🚢 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The application is deployed on Vercel with automatic deployments from the main branch.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ using Next.js and modern web technologies
