@@ -133,7 +133,7 @@ export default function ChatInput({ chatIdParam, isDesktop, bottomRef, models, s
 
             if (!response.ok || !response.body) {
                 setLoadingMessage(false);
-                setErrorMessage("Error establishing connection");
+                setErrorMessage("Try again later or select another model");
                 return;
             }
 
@@ -208,7 +208,7 @@ export default function ChatInput({ chatIdParam, isDesktop, bottomRef, models, s
                     <ModelSelect models={models} selectedModelValue={selectedModelValue} setSelectedModelValue={setSelectedModelValue} />
                     <TemperatureInput temperature={temperature} setTemperature={setTemperature} temperatureInput={temperatureInput} setTemperatureInput={setTemperatureInput} isDesktop={isDesktop} />
                 </div>
-                <p id="error-message" className="text-[14px] my-[0px]">{errorMessage}</p>
+                <p id="error-message" className="max-lg:text-[10px] max-lg:mb-[24px] text-[14px] my-[0px]">{errorMessage}</p>
                 {showLoading ? <StopButton stopStream={stopStream} /> : <SendButton sendPrompt={sendPrompt}/>}
             </div>
         </div>
