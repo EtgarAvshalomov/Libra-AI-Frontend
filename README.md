@@ -2,6 +2,8 @@
 
 A modern, responsive chat interface for interacting with multiple Large Language Models (LLMs) via OpenRouter, featuring dynamic model switching and real-time streaming capabilities.
 
+https://github.com/user-attachments/assets/f4f6603d-1852-4d8e-ba69-4ae943b26b5e
+
 ## 🚀 Features
 
 - **Multi-Model Support**: Switch between different LLM models mid-conversation while maintaining context
